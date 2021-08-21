@@ -36,10 +36,15 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId() ){
                 case R.id.btn_start:
                     //핸들러 실행
+                    handler.sendEmptyMessage(0);
+
+                    btn_start.setEnabled(false); //버튼클릭 비활성화
                     break;
                 case R.id.btn_stop:
                     //핸들러 정지
+                    handler.removeMessages(0);
 
+                    btn_start.setEnabled(true); //버튼클릭 활성화
                     break;
             }
         }
@@ -50,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
+//            super.handleMessage(msg);
+            //일정 간격으로 핸들러 자신을 반복 호출
+            handler.sendEmptyMessageDelayed(0, 1000);
+
+            txt_count.setText(String.valueOf( ++count ));
         }
     };
 
